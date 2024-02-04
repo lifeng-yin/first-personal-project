@@ -10,10 +10,10 @@ import { genSaltSync, hashSync } from 'bcrypt-ts';
 let client = postgres(`${process.env.POSTGRES_URL!}?sslmode=require`);
 let db = drizzle(client);
 
-let users = pgTable('User', {
+export const users = pgTable('users', {
   id: serial('id').primaryKey(),
-  email: varchar('email', { length: 64 }),
-  password: varchar('password', { length: 64 }),
+  email: varchar('email'),
+  password: varchar('password'),
 });
 
 export async function getUser(email: string) {

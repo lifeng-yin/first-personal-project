@@ -5,19 +5,22 @@ export const authConfig = {
     signIn: '/login',
   },
   providers: [
-    // added later in auth.ts since it requires bcrypt which is only compatible with Node.js
-    // while this file is also used in non-Node.js environments
+    // TODO: GOOGLE AUTH
   ],
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
-      let isLoggedIn = !!auth?.user;
-      let isOnDashboard = nextUrl.pathname.startsWith('/protected');
+      const isLoggedIn = !!auth?.user;
+      const isOnApp = nextUrl.pathname.startsWith('/app');
+      const isOnLanding = nextUrl.pathname === '/'
 
-      if (isOnDashboard) {
-        if (isLoggedIn) return true;
-        return false; // Redirect unauthenticated users to login page
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/protected', nextUrl));
+      if (isOnApp) {
+        if (!isLoggedIn) return false;
+        if (nextUrl.pathname === '/app') {
+          return Response.redirect(new URL('/app/dashboard', nextUrl));
+        }
+      }
+      else if (isOnLanding && isLoggedIn) {
+        return Response.redirect(new URL('/app/dashboard', nextUrl));
       }
 
       return true;

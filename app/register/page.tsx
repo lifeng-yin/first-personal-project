@@ -1,8 +1,9 @@
 import Link from 'next/link';
-import { Form } from 'app/form';
+import { Form } from '@/app/components/form';
 import { redirect } from 'next/navigation';
 import { createUser, getUser } from 'app/db';
-import { SubmitButton } from 'app/submit-button';
+import { SubmitButton } from '@/app/components/submit-button';
+import { signIn } from 'app/auth';
 
 export default function Login() {
   async function register(formData: FormData) {
@@ -15,6 +16,11 @@ export default function Login() {
       return 'User already exists'; // TODO: Handle errors with useFormStatus
     } else {
       await createUser(email, password);
+      await signIn('credentials', {
+        redirectTo: '/app/dashboard',
+        email: formData.get('email') as string,
+        password: formData.get('password') as string,
+      });
       redirect('/login');
     }
   }

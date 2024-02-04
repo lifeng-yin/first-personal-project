@@ -1,6 +1,6 @@
 import { auth, signOut } from 'app/auth';
 
-export default async function ProtectedPage() {
+export default async function Dashboard() {
   let session = await auth();
 
   return (
