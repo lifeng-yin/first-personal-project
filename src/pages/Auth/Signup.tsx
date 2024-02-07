@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { AlertCircle } from "lucide-react"
-import useAppStateStore from "@/contexts/appstate"
+import useAppStateStore from "@/contexts/app-state"
+import { Link, useLocation } from "wouter"
 
 
 const Signup = () => {
@@ -13,6 +14,8 @@ const Signup = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+
+  const [, navigate] = useLocation()
 
   const { pocketbase } = useAppStateStore()
 
@@ -32,7 +35,8 @@ const Signup = () => {
 
     console.log(authData)
   }
-  const handlePasswordSignup = () => {
+  const handlePasswordSignup = async () => {
+    setErrorMessage('')
     if (!email || !password || !confirmPassword) {
       setErrorMessage('Please fill out all form fields. ')
     }
@@ -43,12 +47,24 @@ const Signup = () => {
       setErrorMessage(' Password must be at least 8 characters.')
     }
 
-    pocketbase
-      .collection("users")
-      .authWithPassword(email, password)
-      .then(() => {
-        console.log('yo')
-      })
+    if (errorMessage === '') {
+      try {
+        const authData = await pocketbase
+          .collection("users")
+          .create({
+            email,
+            password,
+            passwordConfirm: confirmPassword
+          })
+
+        navigate('/app/dashboard')
+        
+      } catch (e: any) {
+        setErrorMessage(`A user with that email already exists.`)
+        console.error(e)
+      }
+    }
+
   }
 
   return (
@@ -105,7 +121,11 @@ const Signup = () => {
               onChange={e => setConfirmPassword(e.target.value)}
               className="outline-none focus:outline-black mb-6"
             />
-            <Button className="text-lg" onClick={handlePasswordSignup}>Sign up</Button>
+            
+            <Button className="text-xl py-3 font-semibold mb-3 w-full" onClick={handlePasswordSignup}>Sign up</Button>
+            <br />
+            <span className="text-gray-500">Already have have an account?&nbsp;</span>
+            <Link to="/login" className="text-blue-400 hover:underline">Log In</Link>
             { errorMessage.length ? <Alert variant="destructive" className="mt-4">
               <AlertCircle className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>

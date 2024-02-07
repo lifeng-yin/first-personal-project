@@ -1,7 +1,7 @@
 import { Switch, Route, Redirect } from 'wouter'
 import Landing from './pages/Landing/Landing'
 import { ThemeProvider } from './contexts/theme-provider'
-import useAppStateStore from './contexts/appstate'
+import useAppStateStore from './contexts/app-state'
 import Login from './pages/Auth/Login'
 import Signup from './pages/Auth/Signup'
 
@@ -9,22 +9,23 @@ import "@fontsource-variable/inter";
 
 
 function App() {
-  const { user } = useAppStateStore()
+  const { pocketbase } = useAppStateStore()
+  const isLoggedIn = pocketbase.authStore.isValid
   return (
     <ThemeProvider>
       <div className="dark:bg-slate-950 w-screen min-h-screen text-white/95">
         <Switch>
           <Route path="/">
-            { user ? <Landing /> : <Redirect to="/app/dashboard" />}
+            { isLoggedIn ? <Landing /> : <Redirect to="/app/dashboard" />}
           </Route>
           <Route path="/login">
-            { user ? <Redirect to="/app/dashboard" /> : <Login />}
+            { isLoggedIn ? <Redirect to="/app/dashboard" /> : <Login />}
           </Route>
           <Route path="/signup">
-            { user ? <Redirect to="/app/dashboard" /> : <Signup />}
+            { isLoggedIn ? <Redirect to="/app/dashboard" /> : <Signup />}
           </Route>
           <Route path="/app" nest>
-            { user 
+            { isLoggedIn 
             ? <Switch>
                 <Route path="/"><Redirect to="/dashboard" /></Route>
                 <Route path="/dashboard">Dashboard</Route>
