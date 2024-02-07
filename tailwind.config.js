@@ -16,6 +16,9 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+      'sans': ['Inter Variable', 'ui-sans-serif', 'system-ui']
+    },
     extend: {
       keyframes: {
         "accordion-down": {
@@ -34,4 +37,5 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
+  
 }
