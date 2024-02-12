@@ -1,6 +1,6 @@
 const Landing = () => {    
     return <>
-        
+        Landing
     </>
 }
 

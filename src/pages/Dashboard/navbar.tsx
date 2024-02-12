@@ -9,3 +9,11 @@ const ActiveLink = (props: any) => {
       </Link>
     );
 }
+
+const Navbar = () => {
+  return (
+    <nav>
+      <ActiveLink href="">Hi</ActiveLink>
+    </nav>
+  )
+}

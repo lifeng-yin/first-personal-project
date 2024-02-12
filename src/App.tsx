@@ -6,6 +6,7 @@ import Login from './pages/Auth/Login'
 import Signup from './pages/Auth/Signup'
 
 import "@fontsource-variable/inter";
+import Dashboard from './pages/Dashboard/Dashboard'
 
 
 function App() {
@@ -28,7 +29,9 @@ function App() {
             { isLoggedIn 
             ? <Switch>
                 <Route path="/"><Redirect to="/dashboard" /></Route>
-                <Route path="/dashboard">Dashboard</Route>
+                <Route path="/dashboard">
+                  <Dashboard />
+                </Route>
                 <Route>404</Route>
               </Switch>
             : <Redirect to="~/login" />
