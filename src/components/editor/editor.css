@@ -1,3 +1,15 @@
 .disable-zen-mode {
     display: none
 }
+
+body {
+    --swatch-color: transparent !important;
+}
+
+.dropdown-menu-button {
+    display: none !important;
+}
+
+.excalidraw__canvas .interactive {
+    display: none !important;
+}

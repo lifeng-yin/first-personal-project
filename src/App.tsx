@@ -4,6 +4,7 @@ import { ThemeProvider } from './contexts/theme-provider'
 import useAppStateStore from './contexts/app-state'
 import Login from './pages/Auth/Login'
 import Signup from './pages/Auth/Signup'
+import Edit from './pages/Edit/Edit'
 
 import "@fontsource-variable/inter";
 import Dashboard from './pages/Dashboard/Dashboard'
@@ -14,10 +15,9 @@ function App() {
   const isLoggedIn = pocketbase.authStore.isValid
   return (
     <ThemeProvider>
-      <div className="dark:bg-slate-950 w-screen min-h-screen text-white/95">
         <Switch>
           <Route path="/">
-            { isLoggedIn ? <Landing /> : <Redirect to="/app/dashboard" />}
+            <Landing />
           </Route>
           <Route path="/login">
             { isLoggedIn ? <Redirect to="/app/dashboard" /> : <Login />}
@@ -32,6 +32,9 @@ function App() {
                 <Route path="/dashboard">
                   <Dashboard />
                 </Route>
+                <Route path="/edit/:id">
+                  <Edit />
+                </Route>
                 <Route>404</Route>
               </Switch>
             : <Redirect to="~/login" />
@@ -39,7 +42,6 @@ function App() {
           </Route>
           <Route>404</Route>
         </Switch>
-      </div>
     </ThemeProvider>
   )
 }

@@ -7,7 +7,7 @@ const Editor = () => {
 			<Excalidraw initialData={{
 				appState: {
 					zenModeEnabled: true,
-					viewModeEnabled: true
+					
 				}
 			}}/>
 		</div>

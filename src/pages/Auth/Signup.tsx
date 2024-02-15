@@ -49,7 +49,7 @@ const Signup = () => {
 
     if (errorMessage === '') {
       try {
-        const authData = await pocketbase
+        await pocketbase
           .collection("users")
           .create({
             email,

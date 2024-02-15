@@ -1,14 +1,12 @@
 import CommandMenu from "@/components/command/command"
 import { ResizablePanel, ResizablePanelGroup, ResizableHandle } from "@/components/ui/resizable"
-import Navbar from "./navbar"
 
-const Dashboard = () => {
+const Edit = () => {
   return <>
-    <Navbar />
-    <div className="ml-4 p-6">
-      {/*<ResizablePanelGroup
+    <div className="ml-4 p-6 h-full">
+      <ResizablePanelGroup
         direction="horizontal"
-        className="max-w-md rounded-lg border border-slate-700"
+        className="w-full h-full rounded-lg border border-slate-700"
       >
         <ResizablePanel defaultSize={50}>
           <div className="flex h-[200px] items-center justify-center p-6">
@@ -32,10 +30,10 @@ const Dashboard = () => {
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
-<CommandMenu />*/}
+<CommandMenu />
     </div>
     
   </>
 }
 
-export default Dashboard
+export default Edit

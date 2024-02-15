@@ -48,6 +48,8 @@ const Login = () => {
             email,
             password
           )
+
+        console.log(authData)
         
         navigate('/app/dashboard')
 
